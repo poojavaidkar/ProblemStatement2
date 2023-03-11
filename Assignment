@@ -1,0 +1,60 @@
+import java.util.*;
+public class Main
+{
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		int testcases = 0;
+		testcases = sc.nextInt();
+		String text = "";
+		String pattern = "";
+		Map<Character,Integer> countMap = new HashMap<>();
+		Map<Character,Integer> countMap2 = new HashMap<>();
+		
+		boolean flag = true;
+		
+		while(testcases>0) {
+			pattern = sc.next();
+			sc.nextLine();
+			text = sc.nextLine();
+			countMap = new HashMap<>();
+			countMap2 = new HashMap<>();
+			
+			filler(countMap,pattern);
+			filler(countMap2,text);
+			
+			for(Map.Entry obj: countMap.entrySet()) {
+				char ch = (char)obj.getKey();
+				if(!countMap2.containsKey(ch)) {
+					flag = false;
+					break;
+				}
+				if((int)obj.getValue()>countMap2.get(ch)) {
+					flag = false;
+					break;
+				}
+			}
+			if(flag) {
+				System.out.println("YES");
+			}else {
+				System.out.println("NO");
+			}
+			flag = true;
+			testcases--;
+		}
+	}
+	static void filler(Map<Character,Integer> map,String s){
+	    int len =s.length();
+	    char ch = ' ';
+	    int count = 0;
+	    for(int i=0;i<len;i++){
+	        ch = s.charAt(i);
+	        if(!map.containsKey(ch)){
+	            map.put(ch,1);
+	        }else{
+	            count = map.get(ch);
+	            map.put(ch,count+1);
+	        }
+	    }
+	}
+}
